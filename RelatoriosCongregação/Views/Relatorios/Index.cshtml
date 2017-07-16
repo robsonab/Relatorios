@@ -1,0 +1,42 @@
+﻿@model RelatoriosCongregação.Models.RelatorioGeral
+
+@{
+    ViewBag.Title = "Relatórios";
+}
+
+<h2>Relatórios</h2>
+
+<hr />
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+
+        <div class="col-md-2" style="display: flex">
+            <label class="control-label" for="Mes" style="margin-right: 0.5em; padding-top: 0.5em;">Mês:</label>
+            @Html.DropDownList("mes", (SelectList)ViewBag.Meses,
+               new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-2" style="display: flex">
+            <label class="control-label" for="Ano" style="margin-right: 0.5em; padding-top: 0.5em;">Ano:</label>
+            @Html.DropDownList("ano", (SelectList)ViewBag.Anos,
+               new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-2" style="display: flex">
+            <label class="control-label" for="Tipo" style="margin-right: 0.5em; padding-top: 0.5em;">Tipos:</label>
+            @Html.DropDownList("tipo", (SelectList)ViewBag.Tipos,
+               new { @class = "form-control" })
+        </div>
+        <div class="cold-md-2">
+            <input type="submit" value="Pesquisar" class="btn btn-default" />
+        </div>
+    </div>
+}
+<hr />
+@Html.Partial("Totais", Model.Totais)
+<hr />
+@Html.Partial("Irregulares", Model.Irregulares)
+<hr />
+@Html.Partial("Detalhado", Model.Detalhado)

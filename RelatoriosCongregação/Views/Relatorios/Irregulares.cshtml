@@ -1,0 +1,27 @@
+﻿@model List<RelatoriosCongregação.Models.PublicadoresPorGrupo>
+
+<h4>Irregulares</h4>
+
+<table class="table table-striped">
+    <tr>
+        <th>
+            Dirigente
+        </th>       
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dirigente)
+                <ul style="list-style-type:none">
+                    @foreach (var nome in item.Publicadores)
+                    {
+                        <li>@nome</li>
+                    }
+                </ul>
+            </td>            
+        </tr>        
+    }
+
+</table>

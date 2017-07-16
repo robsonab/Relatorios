@@ -1,0 +1,14 @@
+﻿@model List<string>
+<p>
+    
+    @Html.DropDownList("AnoMes", new SelectList(Model))
+    
+    @*@Html.DropDownList("Publicadores", new SelectList(ViewBag.Publicadores, "Id", "Nome"),
+    new { onchange = "document.location.href = '/Relatorios/Index/' + this.options[this.selectedIndex].value;" })
+
+
+    @Html.DropDownList("Sortby",
+    new SelectListItem[] { new SelectListItem() { Text = "Newest to Oldest", Value = "0" },
+    new SelectListItem() { Text = "Oldest to Newest", Value = "1" } },
+    new { onchange = "document.location.href = '/Relatorios/id=' + this.options[this.selectedIndex].value;" })*@
+</p>

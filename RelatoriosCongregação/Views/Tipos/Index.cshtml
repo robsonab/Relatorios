@@ -1,0 +1,36 @@
+﻿@model List<RelatoriosCongregação.Models.Tipos>
+
+@{
+    ViewBag.Title = "Tipos de Publicador";
+    //Layout = "~/Views/Cadastros/Grupos.cshtml";
+}
+
+<h2>Tipos de publicador</h2>
+<br />
+<table class="table table-striped" style="max-width: 40em">
+    <tr>
+        <th style="width: 5em; ">
+            <div style="font-size: 13pt">
+                <a href='@Url.Action("Create")'><span class='glyphicon glyphicon-plus-sign' aria-hidden='true'></span></a>
+            </div>
+        </th>
+        <th>
+            Tipos
+        </th>     
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href='@Url.Action("Edit", new { id = item.Id } )'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a> |
+                <a href='@Url.Action("Delete", new { id = item.Id } )'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>
+            </td>            
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,68 @@
+﻿@model RelatoriosCongregação.Models.Relatorios
+
+@{
+    ViewBag.Title = "Exclusão";
+}
+
+<h2>Delete</h2>
+
+<h3>Tem certeza que deseja excluir?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Publicadores.Nome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Publicadores.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipos.Tipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tipos.Tipo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ano)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Ano)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Mes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Mes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Horas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Horas)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <div class="form-actions no-color col-md-offset-1 col-md-11">
+                <input type="submit" value="Excluir" class="btn btn-default" style="width: 10em;" />
+            </div>
+        </div>
+    }
+</div>
+<br />
+<div>
+    @Html.ActionLink("Voltar", "Index")
+</div>
+
+

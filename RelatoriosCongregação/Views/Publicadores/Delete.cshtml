@@ -1,0 +1,60 @@
+﻿@model RelatoriosCongregação.Models.Publicadores
+
+@{
+    ViewBag.Title = "Excluir";
+}
+
+<h2>Excluir</h2>
+
+<h3>Tem certeza que deseja excluir o publicador</h3>
+<div>
+    <h4>Publicadores</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Grupos.Grupo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Grupos.Grupo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipos.Tipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tipos.Tipo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ativo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ativo)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-11">
+                <input type="submit" value="Exlcuir" class="btn btn-default" />
+            </div>
+        </div>
+    }
+</div>
+<div>
+    @Html.ActionLink("Voltar", "Index")
+</div>

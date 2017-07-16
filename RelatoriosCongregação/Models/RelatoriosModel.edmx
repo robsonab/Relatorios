@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FieldServiceDataBaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Publicadores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdGrupo" Type="int" Nullable="false" />
+          <Property Name="IdTipo" Type="int" Nullable="false" />
+          <Property Name="Ativo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Relatorios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AnoMes" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="IdPublicador" Type="int" Nullable="false" />
+          <Property Name="IdTipo" Type="int" Nullable="false" />
+          <Property Name="Horas" Type="int" Nullable="false" />
+          <Property Name="Videos" Type="int" Nullable="false" />
+          <Property Name="Publicacoes" Type="int" Nullable="false" />
+          <Property Name="Revisitas" Type="int" Nullable="false" />
+          <Property Name="Estudos" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tipos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Publicadores_To_Tipos">
+          <End Role="Tipos" Type="Self.Tipos" Multiplicity="1" />
+          <End Role="Publicadores" Type="Self.Publicadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Publicadores">
+              <PropertyRef Name="IdTipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Relatorios_To_Publicadores">
+          <End Role="Publicadores" Type="Self.Publicadores" Multiplicity="1" />
+          <End Role="Relatorios" Type="Self.Relatorios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publicadores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Relatorios">
+              <PropertyRef Name="IdPublicador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Relatorios_To_Tipos">
+          <End Role="Tipos" Type="Self.Tipos" Multiplicity="1" />
+          <End Role="Relatorios" Type="Self.Relatorios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Relatorios">
+              <PropertyRef Name="IdTipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FieldServiceDataBaseModelStoreContainer">
+          <EntitySet Name="Publicadores" EntityType="Self.Publicadores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Relatorios" EntityType="Self.Relatorios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipos" EntityType="Self.Tipos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Publicadores_To_Tipos" Association="Self.FK_Publicadores_To_Tipos">
+            <End Role="Tipos" EntitySet="Tipos" />
+            <End Role="Publicadores" EntitySet="Publicadores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Relatorios_To_Publicadores" Association="Self.FK_Relatorios_To_Publicadores">
+            <End Role="Publicadores" EntitySet="Publicadores" />
+            <End Role="Relatorios" EntitySet="Relatorios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Relatorios_To_Tipos" Association="Self.FK_Relatorios_To_Tipos">
+            <End Role="Tipos" EntitySet="Tipos" />
+            <End Role="Relatorios" EntitySet="Relatorios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FieldServiceDataBaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Publicadores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdGrupo" Type="Int32" Nullable="false" />
+          <Property Name="IdTipo" Type="Int32" Nullable="false" />
+          <Property Name="Ativo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tipos" Relationship="Self.FK_Publicadores_To_Tipos" FromRole="Publicadores" ToRole="Tipos" />
+          <NavigationProperty Name="Relatorios" Relationship="Self.FK_Relatorios_To_Publicadores" FromRole="Publicadores" ToRole="Relatorios" />
+        </EntityType>
+        <EntityType Name="Relatorios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AnoMes" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="IdPublicador" Type="Int32" Nullable="false" />
+          <Property Name="IdTipo" Type="Int32" Nullable="false" />
+          <Property Name="Horas" Type="Int32" Nullable="false" />
+          <Property Name="Videos" Type="Int32" Nullable="false" />
+          <Property Name="Publicacoes" Type="Int32" Nullable="false" />
+          <Property Name="Revisitas" Type="Int32" Nullable="false" />
+          <Property Name="Estudos" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Publicadores" Relationship="Self.FK_Relatorios_To_Publicadores" FromRole="Relatorios" ToRole="Publicadores" />
+          <NavigationProperty Name="Tipos" Relationship="Self.FK_Relatorios_To_Tipos" FromRole="Relatorios" ToRole="Tipos" />
+        </EntityType>
+        <EntityType Name="Tipos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Publicadores" Relationship="Self.FK_Publicadores_To_Tipos" FromRole="Tipos" ToRole="Publicadores" />
+          <NavigationProperty Name="Relatorios" Relationship="Self.FK_Relatorios_To_Tipos" FromRole="Tipos" ToRole="Relatorios" />
+        </EntityType>
+        <Association Name="FK_Publicadores_To_Tipos">
+          <End Role="Tipos" Type="Self.Tipos" Multiplicity="1" />
+          <End Role="Publicadores" Type="Self.Publicadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Publicadores">
+              <PropertyRef Name="IdTipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Relatorios_To_Publicadores">
+          <End Role="Publicadores" Type="Self.Publicadores" Multiplicity="1" />
+          <End Role="Relatorios" Type="Self.Relatorios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publicadores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Relatorios">
+              <PropertyRef Name="IdPublicador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Relatorios_To_Tipos">
+          <End Role="Tipos" Type="Self.Tipos" Multiplicity="1" />
+          <End Role="Relatorios" Type="Self.Relatorios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Relatorios">
+              <PropertyRef Name="IdTipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FieldServiceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Publicadores" EntityType="Self.Publicadores" />
+          <EntitySet Name="Relatorios" EntityType="Self.Relatorios" />
+          <EntitySet Name="Tipos" EntityType="Self.Tipos" />
+          <AssociationSet Name="FK_Publicadores_To_Tipos" Association="Self.FK_Publicadores_To_Tipos">
+            <End Role="Tipos" EntitySet="Tipos" />
+            <End Role="Publicadores" EntitySet="Publicadores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Relatorios_To_Publicadores" Association="Self.FK_Relatorios_To_Publicadores">
+            <End Role="Publicadores" EntitySet="Publicadores" />
+            <End Role="Relatorios" EntitySet="Relatorios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Relatorios_To_Tipos" Association="Self.FK_Relatorios_To_Tipos">
+            <End Role="Tipos" EntitySet="Tipos" />
+            <End Role="Relatorios" EntitySet="Relatorios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FieldServiceDataBaseModelStoreContainer" CdmEntityContainer="FieldServiceEntities">
+          <EntitySetMapping Name="Publicadores">
+            <EntityTypeMapping TypeName="FieldServiceDataBaseModel.Publicadores">
+              <MappingFragment StoreEntitySet="Publicadores">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
+                <ScalarProperty Name="IdTipo" ColumnName="IdTipo" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Relatorios">
+            <EntityTypeMapping TypeName="FieldServiceDataBaseModel.Relatorios">
+              <MappingFragment StoreEntitySet="Relatorios">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AnoMes" ColumnName="AnoMes" />
+                <ScalarProperty Name="IdPublicador" ColumnName="IdPublicador" />
+                <ScalarProperty Name="IdTipo" ColumnName="IdTipo" />
+                <ScalarProperty Name="Horas" ColumnName="Horas" />
+                <ScalarProperty Name="Videos" ColumnName="Videos" />
+                <ScalarProperty Name="Publicacoes" ColumnName="Publicacoes" />
+                <ScalarProperty Name="Revisitas" ColumnName="Revisitas" />
+                <ScalarProperty Name="Estudos" ColumnName="Estudos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipos">
+            <EntityTypeMapping TypeName="FieldServiceDataBaseModel.Tipos">
+              <MappingFragment StoreEntitySet="Tipos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

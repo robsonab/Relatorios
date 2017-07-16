@@ -1,0 +1,77 @@
+﻿@model IEnumerable<RelatoriosCongregação.Models.Relatorios>
+        
+<h4>Publicadores</h4>
+
+<table class="table table-striped">
+    <tr>
+        <th style="width: 5em; ">
+            <div style="font-size: 13pt">
+                <a href='@Url.Action("Create",  new RouteValueDictionary(new { showAll = false }))'><span class='glyphicon glyphicon-plus-sign' aria-hidden='true'></span></a>
+            </div>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Publicadores.Grupo.Dirigente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Publicadores.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tipos.Tipo)
+        </th>
+
+        <th align="right">
+            @Html.DisplayNameFor(model => model.Publicacoes)
+        </th>
+        <th align="right">
+            @Html.DisplayNameFor(model => model.Videos)
+        </th>
+        <th align="right">
+            @Html.DisplayNameFor(model => model.Horas)
+        </th>
+        <th align="right">
+            @Html.DisplayNameFor(model => model.Revisitas)
+        </th>
+        <th align="right">
+            @Html.DisplayNameFor(model => model.Estudos)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                <a href='@Url.Action("Edit", new { id = item.Id } )'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a> |
+                <a href='@Url.Action("Delete", new { id = item.Id } )'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publicadores.Grupo.Dirigente)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publicadores.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipos.Tipo)
+            </td>
+
+            <td align="right">
+                @Html.DisplayFor(modelItem => item.Publicacoes)
+            </td>
+            <td align="right">
+                @Html.DisplayFor(modelItem => item.Videos)
+            </td>
+            <td align="right">
+                @Html.DisplayFor(modelItem => item.Horas)
+            </td>
+            <td align="right">
+                @Html.DisplayFor(modelItem => item.Revisitas)
+            </td>
+            <td align="right">
+                @Html.DisplayFor(modelItem => item.Estudos)
+            </td>
+
+        </tr>
+    }
+
+</table>

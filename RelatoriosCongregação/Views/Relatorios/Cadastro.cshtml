@@ -1,0 +1,135 @@
+﻿@model RelatoriosCongregação.Models.Relatorios
+ @*$(function () {
+        $("#IdPublicador").change(function () {
+            var selectedItem = $(this).val();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.RouteUrl("GetTipoPublicador"))",
+                data: { "Id": selectedItem },
+                success: function (data) {
+                $('#IdTipo').val(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve states.');
+                }
+                });
+                });
+                });*@
+
+<script type="text/javascript">
+    $(function () {
+        $("#IdPublicador").change(function () {
+            var selectedItem = $(this).val();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.RouteUrl("GetRelatorioPublicador"))",
+                data: { "idPublicador": selectedItem, "mes": $("#mes").val(), "ano": $("#ano").val() },
+                success: function (data) {
+                    $('#IdTipo').val(data.IdTipo);
+                    $('#Horas').val(data.Horas);
+                    $('#Publicacoes').val(data.Publicacoes);
+                    $('#Videos').val(data.Videos);
+                    $('#Revisitas').val(data.Revisitas);
+                    $('#Estudos').val(data.Estudos);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+                }
+            });
+        });
+    });
+</script>
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            <label class="control-label col-md-1" for="Mes">Mês:</label>
+            <div class="col-md-2">
+                @Html.DropDownList("mes", (SelectList)ViewBag.Meses, 
+               new { @class = "form-control" })
+            </div>
+            <label class="control-label col-md-1" for="Ano">Ano</label>
+            <div class="col-md-2">
+                @Html.DropDownList("ano", (SelectList)ViewBag.Anos,
+               new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdTipo, "Tipo", htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-5">
+                @Html.DropDownListFor(model => model.IdTipo, (SelectList)ViewBag.Tipos, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdTipo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdPublicador, "Publicador", htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-10" style="display:inline-flex">
+                @Html.DropDownListFor(model => model.IdPublicador, (SelectList)ViewBag.Publicadores, new { @class = "form-control" })
+                <a href='@Url.Action("Create",  new RouteValueDictionary(new { showAll = true }))' class="btn btn-default">Mostrar Todos</a>
+                @Html.ValidationMessageFor(model => model.IdPublicador, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Publicacoes, "Public.", htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.Publicacoes, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Publicacoes, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.LabelFor(model => model.Videos, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.Videos, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Videos, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Horas, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.Horas, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Horas, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.Revisitas, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.Revisitas, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Revisitas, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Estudos, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.Estudos, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Estudos, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <input type="submit" value="Salvar" class="btn btn-default" style="width: 10em;" />
+            </div>
+        </div>
+    </div>
+}
+
+
+<div>
+    @Html.ActionLink("Voltar", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    document.getElementById("IdPublicador").focus();
+</script>

@@ -1,0 +1,85 @@
+﻿@model RelatoriosCongregação.Models.Relatorios
+@{
+    ViewBag.Title = "Index";
+}
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        $("#IdPublicador").change(function () {
+            var selectedItem = $(this).val();
+            var statesProgress = $("#states-loading-progress");
+            statesProgress.show();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.RouteUrl("GetTipoPublicador"))",
+                data: { "Id": selectedItem },
+                success: function (data) {
+                    $('#IdTipo').val(data);
+                    statesProgress.hide();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+                    statesProgress.hide();
+                }
+            });
+        });
+
+        $("#Mes").change(function () {
+            var selectedItem = $(this).val();
+            var ddlPublicadores = $("#IdPublicador");
+            var statesProgress = $("#states-loading-progress");
+            statesProgress.show();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.RouteUrl("GetPublicadoresByGrupo"))",
+                data: { "Id": selectedItem },
+                success: function (data) {
+                    ddlPublicadores.html('');
+                    $.each(data, function (id, option) {
+                        ddlPublicadores.append($('<option></option>').val(option.Id).html(option.Nome));
+                    });
+                    statesProgress.hide();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+                    statesProgress.hide();
+                }
+            });
+        });
+    });
+</script>
+
+<div class="form-horizontal">
+    <hr />
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Mes, "Tipo", htmlAttributes: new { @class = "control-label col-md-1" })
+        <div class="col-md-5">
+            @Html.DropDownListFor(model => model.Mes, (SelectList)ViewBag.Grupos, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Mes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-1">Publicador</label>
+        <div class="col-md-5">
+            @Html.DropDownListFor(model => model.IdPublicador, (SelectList)ViewBag.Publicadores, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IdPublicador, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-1">Tipo</label>
+        <div class="col-md-5">
+            @Html.DropDownListFor(model => model.IdTipo, (SelectList)ViewBag.Tipos, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IdTipo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <span id="states-loading-progress" style="display: none;">Aguarde..</span>
+</div>
+

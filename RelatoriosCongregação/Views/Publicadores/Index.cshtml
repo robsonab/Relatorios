@@ -1,0 +1,64 @@
+﻿@model IEnumerable<RelatoriosCongregação.Models.Publicadores>
+
+@{
+    ViewBag.Title = "Publicadores";
+}
+
+<h2>Publicadores</h2>
+
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <div class="col-md-5">
+            @Html.TextBox("search")
+            <input type="submit" value="Pesquisar" class="btn btn-default" />
+        </div>
+    </div>
+}
+<table class="table">
+    <tr>
+        <th style="width: 5em; ">
+            <div style="font-size: 13pt">
+                <a href='@Url.Action("Create")'><span class='glyphicon glyphicon-plus-sign' aria-hidden='true'></span></a>
+            </div>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Grupo.Grupo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tipos.Tipo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ativo)
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href='@Url.Action("Edit", new { id = item.Id } )'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a> |
+                <a href='@Url.Action("Delete", new { id = item.Id } )'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grupo.Grupo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipos.Tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ativo)
+            </td>
+
+        </tr>
+    }
+
+</table>

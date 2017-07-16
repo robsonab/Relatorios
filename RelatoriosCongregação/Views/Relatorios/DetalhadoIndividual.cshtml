@@ -1,0 +1,104 @@
+﻿@model RelatoriosCongregação.Models.Relatorios
+
+@{
+    ViewBag.Title = "DetalhadoIndividual";
+}
+
+<h2>Individual</h2>
+
+<div>
+    <h4>Relatorios</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Publicador
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Publicadores.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipos.Tipo)
+        </dt>
+
+        <dd>
+            @if (Model.IdTipo == 2)
+            {
+                <span style="color:red">
+                    @Html.DisplayFor(model => model.Tipos.Tipo)
+                </span>
+            }
+            else
+            {   
+                @Html.DisplayFor(model => model.Tipos.Tipo)                
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Publicacoes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Publicacoes)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Videos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Videos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Horas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Horas)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Revisitas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Revisitas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estudos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estudos)
+        </dd>
+
+    </dl>
+</div>
+<div class="col-md-offset-1">
+    <a href="@string.Format("DetalhadoIndividual?Pagina={0}&anoMes={1}", 
+            (int.Parse(Request.QueryString["Pagina"].ToString()) <= 1 ? 1 : int.Parse(Request.QueryString["Pagina"].ToString()) -1),
+            ViewBag.anoMes).ToString()" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+        Anterior
+    </a>
+    
+    <a id="proximo"  href="@string.Format("DetalhadoIndividual?Pagina={0}&anoMes={1}",
+                          (int.Parse(Request.QueryString["Pagina"].ToString()) >= ViewBag.QtdTotal ? ViewBag.QtdTotal : int.Parse(Request.QueryString["Pagina"].ToString())  + 1),
+                          ViewBag.anoMes).ToString()" class="btn btn-primary">
+        Próximo
+        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>        
+    </a>
+</div>
+
+<p style="margin-top: 2em;">
+    @Html.ActionLink("Alterar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Voltar", "Index")
+</p>
+
+<script>
+
+    document.getElementById("proximo").focus();
+
+</script>
