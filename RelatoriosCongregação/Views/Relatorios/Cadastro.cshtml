@@ -1,21 +1,21 @@
 ﻿@model RelatoriosCongregação.Models.Relatorios
- @*$(function () {
-        $("#IdPublicador").change(function () {
-            var selectedItem = $(this).val();
-            $.ajax({
-                cache: false,
-                type: "GET",
-                url: "@(Url.RouteUrl("GetTipoPublicador"))",
-                data: { "Id": selectedItem },
-                success: function (data) {
-                $('#IdTipo').val(data);
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                alert('Failed to retrieve states.');
-                }
-                });
-                });
-                });*@
+@*$(function () {
+    $("#IdPublicador").change(function () {
+        var selectedItem = $(this).val();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.RouteUrl("GetTipoPublicador"))",
+            data: { "Id": selectedItem },
+            success: function (data) {
+            $('#IdTipo').val(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            alert('Failed to retrieve states.');
+            }
+            });
+            });
+            });*@
 
 <script type="text/javascript">
     $(function () {
@@ -52,7 +52,7 @@
         <div class="form-group">
             <label class="control-label col-md-1" for="Mes">Mês:</label>
             <div class="col-md-2">
-                @Html.DropDownList("mes", (SelectList)ViewBag.Meses, 
+                @Html.DropDownList("mes", (SelectList)ViewBag.Meses,
                new { @class = "form-control" })
             </div>
             <label class="control-label col-md-1" for="Ano">Ano</label>
@@ -124,7 +124,14 @@
 
 
 <div>
-    @Html.ActionLink("Voltar", "Index")
+    @if (Request.QueryString["anoMes"] == null)
+    {
+        @Html.ActionLink("Voltar", "Index");
+    }
+    else
+    {
+        @Html.ActionLink("Voltar", "DetalhadoIndividual", new { Pagina = Request.QueryString["Pagina"], anoMes = Request.QueryString["anoMes"] });
+    }
 </div>
 
 @section Scripts {

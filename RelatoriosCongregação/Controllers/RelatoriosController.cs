@@ -20,7 +20,7 @@ namespace RelatoriosCongregação.Controllers
         {
             var data = DateTime.Now.AddMonths(-1);
             if (string.IsNullOrEmpty(anoMes))
-            {                
+            {
                 anoMes = data.Year.ToString() + data.Month.ToString().PadLeft(2, '0');
             }
 
@@ -147,11 +147,11 @@ namespace RelatoriosCongregação.Controllers
             //var selectedItem = nomeMeses.Where(m => m.numMes == selectedMonth).FirstOrDefault();
 
             var listMeses = new SelectList(nomeMeses, "numMes", "Nome", selectedMonth);
-            
+
             //var selected = listMeses.Where(x => x.Value == selectedMonth.ToString()).First();
             //listMeses.se= selectedItem.ToString();
 
-            ViewBag.Meses = listMeses;            
+            ViewBag.Meses = listMeses;
         }
 
         public ActionResult AnoMes()
@@ -254,8 +254,14 @@ namespace RelatoriosCongregação.Controllers
         // GET: Relatorios/Edit/5
         public ActionResult Edit(int id)
         {
-            LoadCombosCadastro();
+            // LoadCombosCadastro();
             var relatorio = db.Relatorios.Find(id);
+            relatorio.Ano = int.Parse(relatorio.AnoMes.Substring(0, 4));
+            relatorio.Mes = int.Parse(relatorio.AnoMes.Substring(4, 2));
+            LoadAnos(relatorio.Ano);
+            LoadMeses(relatorio.Mes);
+            LoadTipos();
+            LoadPublicadores();
             return View(relatorio);
         }
 
@@ -270,7 +276,12 @@ namespace RelatoriosCongregação.Controllers
                     relatorio.AnoMes = relatorio.Ano.ToString() + relatorio.Mes.ToString().PadLeft(2, '0');
                     db.Entry(relatorio).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+
+                    return RedirectToAction("Index", new
+                    {
+                        Pagina = Request.QueryString["Pagina"],
+                        anoMes = Request.QueryString["anoMes"]
+                    });
                 }
                 LoadCombosCadastro();
                 return View(relatorio);

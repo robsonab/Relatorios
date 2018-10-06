@@ -93,7 +93,7 @@
 </div>
 
 <p style="margin-top: 2em;">
-    @Html.ActionLink("Alterar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Alterar", "Edit", new { id = Model.Id, anoMes = ViewBag.anoMes, Pagina = Request.QueryString["Pagina"].ToString() }) |
     @Html.ActionLink("Voltar", "Index")
 </p>
 
