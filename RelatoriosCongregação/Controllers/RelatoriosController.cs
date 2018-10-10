@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace RelatoriosCongregação.Controllers
@@ -24,7 +23,10 @@ namespace RelatoriosCongregação.Controllers
                 anoMes = data.Year.ToString() + data.Month.ToString().PadLeft(2, '0');
             }
 
-            if (!pagina.HasValue || pagina.Value <= 0) pagina = 1;
+            if (!pagina.HasValue || pagina.Value <= 0)
+            {
+                pagina = 1;
+            }
 
             var relatorio = db.Relatorios
                                 .Where(r => r.AnoMes == anoMes)
@@ -43,7 +45,10 @@ namespace RelatoriosCongregação.Controllers
 
             ViewBag.anoMes = anoMes;
 
-            if (relatorio == null) relatorio = new Relatorios() { AnoMes = anoMes, IdTipo = 1 };
+            if (relatorio == null)
+            {
+                relatorio = new Relatorios() { AnoMes = anoMes, IdTipo = 1 };
+            }
 
             return View(relatorio);
         }
@@ -63,7 +68,7 @@ namespace RelatoriosCongregação.Controllers
             return publicadores;
         }
 
-        public ActionResult Index(string ano, string mes)
+        public ActionResult Index(string ano, string mes, int tipo)
         {
             string anoMes;
 
@@ -85,19 +90,27 @@ namespace RelatoriosCongregação.Controllers
             LoadPublicadores();
             LoadTipos();
             var geral = new RelatorioGeral();
-            geral.Detalhado = GetRelatorioDetalhado(anoMes);
+            geral.Detalhado = GetRelatorioDetalhado(anoMes, tipo);
             geral.Totais = GetTotais(anoMes);
             geral.Irregulares = GetIrregulares(anoMes);
 
             return View(geral);
         }
 
-        public IQueryable<Relatorios> GetRelatorioDetalhado(string anoMes)
+        public IQueryable<Relatorios> GetRelatorioDetalhado(string anoMes, int tipo)
         {
-            return db.Relatorios.Include("Publicadores").Include("Tipos")
-                             .Where(r => r.AnoMes == anoMes)
-                             .OrderBy(r => r.Publicadores.Nome)
-                             .Select(r => r);
+            var relatorios = db.Relatorios.Include("Publicadores")
+                             .Include("Tipos")
+                             .Where(r => r.AnoMes == anoMes);
+
+            if (tipo != 0)
+            {
+                relatorios = relatorios.Where(c => c.IdTipo == tipo);
+            }
+
+            return relatorios
+                    .OrderByDescending(r => r.Horas)
+                    .Select(r => r); 
         }
 
         public IQueryable<TotaisRelatorio> GetTotais(string anoMes)
@@ -286,7 +299,7 @@ namespace RelatoriosCongregação.Controllers
                 LoadCombosCadastro();
                 return View(relatorio);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 LoadCombosCadastro();
                 return View(relatorio);
