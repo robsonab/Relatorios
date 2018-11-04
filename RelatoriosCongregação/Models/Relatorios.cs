@@ -28,6 +28,7 @@ namespace RelatoriosCongregação.Models
         public int Publicacoes { get; set; }
         public int Revisitas { get; set; }
         public int Estudos { get; set; }
+        public string Observacoes { get; set; }
 
         public virtual Publicadores Publicadores { get; set; }
         public virtual Tipos Tipos { get; set; }

@@ -68,7 +68,7 @@ namespace RelatoriosCongregação.Controllers
             return publicadores;
         }
 
-        public ActionResult Index(string ano, string mes, int tipo)
+        public ActionResult Index(string ano, string mes, int? tipo)
         {
             string anoMes;
 
@@ -97,13 +97,13 @@ namespace RelatoriosCongregação.Controllers
             return View(geral);
         }
 
-        public IQueryable<Relatorios> GetRelatorioDetalhado(string anoMes, int tipo)
+        public IQueryable<Relatorios> GetRelatorioDetalhado(string anoMes, int? tipo)
         {
             var relatorios = db.Relatorios.Include("Publicadores")
                              .Include("Tipos")
                              .Where(r => r.AnoMes == anoMes);
 
-            if (tipo != 0)
+            if (tipo.HasValue && tipo != 0)
             {
                 relatorios = relatorios.Where(c => c.IdTipo == tipo);
             }
