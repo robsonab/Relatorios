@@ -1,4 +1,9 @@
-Teste
-
-sdfsdf
-sdfds
+  var priceOpt = context.OrderItemOpcs
+  .Where(o => o.OrderId == orderItem.OrderId && o.OrderItemId == orderItem.OrderItemId)
+  .GroupBy(o => o.OrderItemId)
+  .Select(o => new
+  {
+      Price = o.Sum(c => c.Price),
+      TablePrice = o.Sum(c => c.TablePrice)
+  }
+  ).FirstOrDefault();
